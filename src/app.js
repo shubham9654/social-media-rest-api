@@ -1,15 +1,29 @@
 const express = require('express');
 const mongoose = require('mongoose');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const authRoute = require('./routes/auth.route');
+const userRoute = require('./routes/user.route');
 
+// init
 const app = express();
-app.use(express.json());
+dotenv.config();
 
+// middlewares
+app.use(express.json());
+app.use(helmet());
+app.use(morgan('common'));
+
+// routes
+app.use('/api/auth', authRoute);
+app.use('/api/user', userRoute);
 app.use((err, req, res, next) => {
 	console.log(err, 'Internal server error');
 	res.status(500).json({ error: 'Internal server error' });
 });
 
+// connection
 const port = process.env.PORT || 3000;
 const start = async () => {
 	try {
