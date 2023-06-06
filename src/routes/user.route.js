@@ -3,7 +3,7 @@ const { updateUser, deleteUser, getUser, followUser, unfollowUser } = require('.
 
 const router = express.Router();
 
-router.get('/:id', getUser).put('/:id', updateUser).delete('/:id', deleteUser);
-router.put('/:id/follow', followUser).put('/:id/follow', unfollowUser);
+router.get('/:userId', getUser).put('/:userId', updateUser).delete('/:userId', deleteUser);
+router.put('/:userId/follow', followUser).put('/:userId/follow', unfollowUser);
 
 module.exports = router;

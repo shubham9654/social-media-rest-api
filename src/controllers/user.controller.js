@@ -6,7 +6,7 @@ const updateUser = async (req, res, next) => {
 		if (req.body.password) {
 			req.body.password = await bcrypt.hash(req.body.password, 10);
 		}
-		const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+		const updatedUser = await User.findByIdAndUpdate(req.params.userId, {
 			$set: req.body
 		}, { new: true });
 
@@ -24,7 +24,7 @@ const updateUser = async (req, res, next) => {
 
 const deleteUser = async (req, res, next) => {
 	try {
-		const userId = req.params.id;
+		const userId = req.params.userId;
 		await User.findOneAndDelete(userId);
 		res.json({ msg: 'User deleted!' });
 	} catch (err) {
@@ -34,7 +34,7 @@ const deleteUser = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
 	try {
-		const userId = req.params.id;
+		const userId = req.params.userId;
 		const user = await User.findById(userId);
 		if (user) {
 			// Exclude password from the response
@@ -51,7 +51,7 @@ const getUser = async (req, res, next) => {
 const followUser = async (req, res, next) => {
 	try {
 		const followerId = req.body.id;
-		const userId = req.params.id; // ID of the user to be followed
+		const userId = req.params.userId; // ID of the user to be followed
 
 		if (!followerId) {
 			return res.status(400).json({ errMsg: 'Follower ID is required!' });
@@ -81,7 +81,7 @@ const followUser = async (req, res, next) => {
 const unfollowUser = async (req, res, next) => {
 	try {
 		const followerId = req.body.id;
-		const userId = req.params.id; // ID of the user to be unfollowed
+		const userId = req.params.userId; // ID of the user to be unfollowed
 
 		if (!followerId) {
 			return res.status(400).json({ errMsg: 'Follower ID is required!' });
