@@ -50,8 +50,8 @@ const getUser = async (req, res, next) => {
 
 const followUser = async (req, res, next) => {
 	try {
-		const followerId = req.body.id;
 		const userId = req.params.userId; // ID of the user to be followed
+		const followerId = req.body.id;
 
 		if (!followerId) {
 			return res.status(400).json({ errMsg: 'Follower ID is required!' });
