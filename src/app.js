@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -25,15 +24,4 @@ app.use((err, req, res, next) => {
 	res.status(500).json({ error: 'Internal server error' });
 });
 
-// connection
-const port = process.env.PORT || 3000;
-const start = async () => {
-	try {
-		await mongoose.connect(process.env.MONGO_DB_URI);
-		app.listen(port, () => console.log(`Server is running on port ${port} ...`));
-	} catch (err) {
-		console.log(err);
-	};
-};
-
-start();
+module.exports = app;
